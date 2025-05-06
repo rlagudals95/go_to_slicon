@@ -1,6 +1,6 @@
+import type { ToastType } from '@extension/ui';
+import { Toast } from '@extension/ui';
 import { useCallback, useEffect, useState } from 'react';
-import type { ToastType } from './components/Toast';
-import { Toast } from './components/Toast';
 import { TranslationTooltip } from './components/TranslationTooltip';
 
 // 번역 결과 인터페이스
