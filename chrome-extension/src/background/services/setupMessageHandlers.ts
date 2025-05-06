@@ -1,6 +1,11 @@
-import { mount } from '@src/Root';
-import { getSettings, saveTranslation } from '@src/services/storage';
-import { translateText } from '@src/services/translation';
+/**
+ * 백그라운드 스크립트
+ * 번역 API 요청을 처리하고 결과를 content 스크립트로 전달
+ */
+import { getSettings, saveTranslation } from './storage';
+import { translateText } from './translation';
+
+console.log('번역 확장 프로그램 백그라운드 스크립트 로드됨');
 
 // 메시지 타입 정의
 type MessageType = 'TRANSLATE_TEXT' | 'SAVE_TRANSLATION';
@@ -38,9 +43,9 @@ interface SaveTranslationMessage extends Message {
 /**
  * 메시지 핸들러 등록
  */
-function setupMessageHandlers() {
+export default function setupMessageHandlers() {
   chrome.runtime.onMessage.addListener((message: Message, sender) => {
-    console.log('메시지 수신:', message.type);
+    console.log('백그라운드: 메시지 수신:', message.type);
 
     switch (message.type) {
       case 'TRANSLATE_TEXT':
@@ -126,9 +131,3 @@ async function handleSaveTranslation(message: SaveTranslationMessage) {
     console.error('번역 저장 오류:', error);
   }
 }
-
-// 초기화
-mount();
-setupMessageHandlers();
-
-console.log('번역 확장 프로그램 런타임 스크립트 로드됨');
